@@ -47,11 +47,16 @@ public class Questao4 extends Questao3{
     }
 
     public void q4(Scanner in,char f){
-        int N = in.nextInt();       
-        LinkedList<Ponto> a = le_pontos(in,N);
+        boolean aleatorio = true;
+        LinkedList<Ponto> a;
+        if(!aleatorio){
+            int N = in.nextInt();       
+            a = le_pontos(in,N);
+        }else{
+            a = q1(in);
+        }
         NearestNeighbourFirst(a); //Caminho formado
         candidatoArray = candidato.toArray(new Ponto[candidato.size()]);
-
         hill_Climbing(f,candidatoArray);
     }
 

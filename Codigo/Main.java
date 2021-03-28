@@ -5,6 +5,7 @@ class Main {
         Questao2 q_2 = new Questao2();
         Questao3 q_3 = new Questao3();
         Questao4 q_4 = new Questao4();
+        Questao5 q_5 = new Questao5();
         Scanner in = new Scanner(System.in);
         int N_questao = in.nextInt(); //numero da questão 
         String letra;
@@ -22,6 +23,10 @@ class Main {
             case 4:
                 letra = in.next();
                 q_4.q4(in,letra.charAt(0));
+                break;
+            case 5:
+                letra = in.next();
+                q_5.q5(in,letra.charAt(0));
                 break;
         }
     }   
