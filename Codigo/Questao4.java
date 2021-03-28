@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.List;
 public class Questao4 extends Questao3{
     /**
      * Aplica o alg hill_Climbing
@@ -15,9 +16,18 @@ public class Questao4 extends Questao3{
             System.out.println("Atual: " + Arrays.toString(atual) + " Vizinho: " + Arrays.toString(Vizinho));
             System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
             if(Qconflitos(Vizinho) >= Qconflitos(atual)){
-                arquivo.escreveCoordenada(Vizinho);
-                System.out.println("Fim");
-                return;
+                if(Qconflitos(atual)==0){
+                    arquivo.escreveCoordenada(Vizinho);
+                    System.out.println("Fim");
+                    return;
+                }else{ // parte do reset
+                    List<Ponto> list = Arrays.asList(atual);
+                    LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
+                    linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
+                    atual = linkedList.toArray(new Ponto[linkedList.size()]);
+
+                    System.out.println("Reset");
+                }
             }
             System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
         }
