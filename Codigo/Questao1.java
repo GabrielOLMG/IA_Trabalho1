@@ -1,7 +1,8 @@
 import java.util.Scanner;
 import java.util.Random;
-
+import java.lang.*;
 public class Questao1 {
+    Random r = new Random();
     /**
      * Gera valores aleatorios entre o intervalo minimo e maximo
      * @param max Valor superior do intervalo
@@ -9,7 +10,6 @@ public class Questao1 {
      * @return Valor randomizao
      */
     public int rand(int max, int min){
-        Random r = new Random();
         return r.nextInt((max-min) + 1) + min;//[min,max]
     }
 

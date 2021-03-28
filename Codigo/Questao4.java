@@ -11,25 +11,27 @@ public class Questao4 extends Questao3{
     public void hill_Climbing(char f, Ponto[] candidato ){ 
         Ponto[] atual = new Ponto[candidato.length];
         System.arraycopy(candidato, 0, atual, 0, candidato.length);
+        int tentativas = 0;
         while(true){
             Ponto[] Vizinho = proximo(atual,f);
             System.out.println("Atual: " + Arrays.toString(atual) + " Vizinho: " + Arrays.toString(Vizinho));
             System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
             if(Qconflitos(Vizinho) >= Qconflitos(atual)){
-                if(Qconflitos(atual)==0){
+                if(Qconflitos(atual)==0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
                 }else{ // parte do reset
+                    System.out.println("-----------------------------------");
                     List<Ponto> list = Arrays.asList(atual);
                     LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
                     linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
                     atual = linkedList.toArray(new Ponto[linkedList.size()]);
-
                     System.out.println("Reset");
                 }
+            }else{
+                System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
             }
-            System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
         }
     }
 
