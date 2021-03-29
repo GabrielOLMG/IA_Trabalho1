@@ -32,7 +32,7 @@ public class Ponto implements Comparable<Ponto>{
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
         Ponto n = (Ponto) o;
-        return (n.X == X && n.Y == Y && n.posicao == posicao);
+        return (n.X == X && n.Y == Y);
     }
 
 }

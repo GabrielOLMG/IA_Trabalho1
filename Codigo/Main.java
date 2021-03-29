@@ -26,7 +26,7 @@ class Main {
                 break;
             case 5:
                 letra = in.next();
-                q_5.q5(in,letra.charAt(0));
+                q_5.q5(in,'d');
                 break;
         }
     }   

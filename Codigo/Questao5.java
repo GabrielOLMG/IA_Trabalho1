@@ -21,7 +21,7 @@ public class Questao5 extends Questao4{
             System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
             if(Qconflitos(atual)==0){ //faz com q ele pare quando chega a um max d interações
                 arquivo.escreveCoordenada(Vizinho);
-                System.out.println("Fim");
+                System.out.println("Fim " + i);
                 return;
             }
             int varEnrg = Qconflitos(Vizinho) - Qconflitos(atual);

@@ -23,7 +23,9 @@ public class Questao1 {
         for(int i = 0 ; i < N ; i++){
             int x = rand(M,-M);
             int y = rand(M,-M);
-            array.add(new Ponto(x,y));
+            Ponto novo = new Ponto(x,y);
+            if(array.contains(novo)) i--;
+            else array.add(novo);
             //System.out.printf("(%d,%d)\n",x,y); //VERIFICAR SE O PONTO JA FOI CRIADO ANTES
         }
         return array;

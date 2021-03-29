@@ -160,20 +160,18 @@ public class Questao3 extends Questao2{
                 menor = count;
                 menorPonto = n;
             }
-            if(count > 0){
+            if(count > 0){ // se tiver conflito, então coloca n lista
                 pontosComConflitos.add(n);
             }
             n++;
         }
-        int posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao;
         if(menorPonto == -1){
             System.out.println("igual");
             return atualCopia;
         }
+        int posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao;
         if(flag == 'd'){
-            menorPonto = rand(pontosComConflitos.size()-1,0);
-            System.out.println(menorPonto);
-            System.out.println(atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.size());
+            menorPonto = pontosComConflitos.get(rand(pontosComConflitos.size()-1,0));
             int conflitoAleatorio = rand(atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.size()-1,0);
             posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.get(conflitoAleatorio).posicao;
         }
