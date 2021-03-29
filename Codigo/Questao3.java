@@ -135,6 +135,38 @@ public class Questao3 extends Questao2{
         return count;
     }
 
+
+    public Ponto[] perimetroConflito(LinkedList<Ponto> todosConflitos, Ponto[] arrayPontos){
+        int posicaoPontoP = -1;
+        int posicaoPontoP2 = -1;
+        for (Ponto p : todosConflitos){
+            LinkedList<Ponto> conflitosP = p.lista_de_conflitos_nao_ordenado;
+            Ponto pxP;
+            if(p.posicao == arrayPontos.length - 1) pxP = arrayPontos[0];
+            else pxP = arrayPontos[p.posicao+1];
+            int minPerimetro = 1000;
+            for(Ponto p2 : conflitosP){
+                Ponto pxP2;
+                if(p2.posicao == arrayPontos.length - 1) pxP2 = arrayPontos[0];
+                else pxP2 = arrayPontos[p2.posicao+1];
+                int somaDist = (distancia(p.X, p.Y, p2.X, p2.Y) + distancia(pxP.X, pxP.Y, pxP2.X, pxP2.Y)) - ( distancia(p.X, p.Y, pxP.X, pxP.Y) + distancia(p2.X, p2.Y, pxP2.X, pxP2.Y));
+
+                if(somaDist < minPerimetro){
+                    minPerimetro = somaDist;
+                    posicaoPontoP = p.posicao;
+                    posicaoPontoP2 = p2.posicao;
+                } 
+            }
+        }
+        if(posicaoPontoP == -1 || posicaoPontoP2 == -1) System.out.println("ERRO NO PERIMETRO");
+        int posicaoDoConflito = posicaoPontoP2; 
+        if(posicaoPontoP == arrayPontos.length - 1){
+            exchange(0, posicaoDoConflito, arrayPontos);
+        }else exchange(posicaoPontoP + 1, posicaoDoConflito, arrayPontos);
+        return arrayPontos;
+
+    }
+
     /**
      * Gera o vizinho para o grafico atual
      * @param atual grafico
@@ -149,6 +181,7 @@ public class Questao3 extends Questao2{
         int N = atualCopia.length;
         int n = 0; //local da origem
         LinkedList<Integer> pontosComConflitos = new LinkedList<Integer>();
+        LinkedList<Ponto> pontosComConflitosObjetos = new LinkedList<Ponto>();
         for(int i = 0 ; i < N ; i++){
             int count = localiza_cruzamentos(n,N, atualCopia);
             if(flag == 'b' && count > 0){
@@ -162,13 +195,20 @@ public class Questao3 extends Questao2{
             }
             if(count > 0){ // se tiver conflito, então coloca n lista
                 pontosComConflitos.add(n);
+                pontosComConflitosObjetos.add(atualCopia[n]);
             }
             n++;
         }
+
+        
+
         if(menorPonto == -1){
             System.out.println("igual");
             return atualCopia;
         }
+        
+        if(flag == 'a') return perimetroConflito(pontosComConflitosObjetos,atualCopia);
+
         int posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao;
         if(flag == 'd'){
             menorPonto = pontosComConflitos.get(rand(pontosComConflitos.size()-1,0));

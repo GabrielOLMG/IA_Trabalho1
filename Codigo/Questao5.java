@@ -32,15 +32,13 @@ public class Questao5 extends Questao4{
                     System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
                     System.out.println("So desta vez ein " + Math.exp(-varEnrg/T));
                 }
-                
-                if( Math.exp(-varEnrg/T) > 1) return;
             }
             if(i%20 == 0) T=T*alfa;
         }
     }
 
     public void q5(Scanner in,char f){
-        boolean aleatorio = false;
+        boolean aleatorio = true;
         LinkedList<Ponto> a;
         if(!aleatorio){
             int N = in.nextInt();       

@@ -9,4 +9,5 @@ for i in range(0, n):
     y.append(a[1])
 
 plt.plot(x,y,'ro-')
+plt.fill(x,y)
 plt.show()

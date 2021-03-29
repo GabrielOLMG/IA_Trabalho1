@@ -17,7 +17,7 @@ public class Questao4 extends Questao3{
             System.out.println("Atual: " + Arrays.toString(atual) + " Vizinho: " + Arrays.toString(Vizinho));
             System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
             if(Qconflitos(Vizinho) >= Qconflitos(atual)){
-                if(Qconflitos(atual)==0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
+                if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
@@ -45,6 +45,7 @@ public class Questao4 extends Questao3{
         }
         return count;
     }
+
 
     public void q4(Scanner in,char f){
         boolean aleatorio = false;
