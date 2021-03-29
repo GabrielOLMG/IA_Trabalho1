@@ -47,7 +47,7 @@ public class Questao4 extends Questao3{
     }
 
     public void q4(Scanner in,char f){
-        boolean aleatorio = true;
+        boolean aleatorio = false;
         LinkedList<Ponto> a;
         if(!aleatorio){
             int N = in.nextInt();       

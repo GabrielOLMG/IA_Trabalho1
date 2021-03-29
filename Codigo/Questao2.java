@@ -48,17 +48,7 @@ public class Questao2 extends Questao1{
      * Gera permutacao para um vetor
      * @param lista lista da permutacao atual.Inicialmente é vazia
      * @param vetor lista com todos os elementos ainda não add na permutacao.Inicialmente contem todos os elementos
-     */
-    /*public LinkedList<Ponto> criaPermutacoes(LinkedList<Ponto> lista, LinkedList<Ponto> vetor){
-        if(vetor.size() == 1){ // quando ja usamos todos os valores do vetor menos um
-            lista.add(vetor.removeFirst());
-            return lista;
-        }
-        int n = rand(vetor.size()-1, 0); // gera uma posição aleatoria da lista vetor
-        lista.add(vetor.remove(n));//add o elemento na posição n do vetor 
-        return criaPermutacoes(lista,vetor);
-    }*/
-    
+     */   
     public LinkedList<Ponto> criaPermutacoes(LinkedList<Ponto> lista, LinkedList<Ponto> vetor){
         while(true){
             if(vetor.size() == 1){ // quando ja usamos todos os valores do vetor menos um

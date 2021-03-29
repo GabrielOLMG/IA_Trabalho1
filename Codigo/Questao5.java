@@ -1,16 +1,17 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.List;
 public class Questao5 extends Questao4{
 
 
     public void simulated_annealing(char f, Ponto[] candidato ){ 
         Ponto[] atual = new Ponto[candidato.length];
         System.arraycopy(candidato, 0, atual, 0, candidato.length);
-        double alfa = 0.9; // o quanto a temperatura vai ser diminuida por turno
+        double alfa = 0.95; // o quanto a temperatura vai ser diminuida por turno
         double T = 100; // temperatura inicial
+        int i = 0;
         while(true){
+            i++;
             if(T == 0){
                 System.out.println("TEMP = 0");
                 return;
@@ -29,10 +30,12 @@ public class Questao5 extends Questao4{
                 double p = Math.random();
                 if(p < Math.exp(-varEnrg/T)){ //vizinho teve mais conflitos, então vamos verificar se devemos considerar pegar ele ou n, usando probabilidade e^(-VariancaDoConflito/T)
                     System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
-                    System.out.println("So desta vez ein " + T);
+                    System.out.println("So desta vez ein " + Math.exp(-varEnrg/T));
                 }
+                
+                if( Math.exp(-varEnrg/T) > 1) return;
             }
-            T=T*alfa;
+            if(i%20 == 0) T=T*alfa;
         }
     }
 

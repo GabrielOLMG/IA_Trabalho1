@@ -61,6 +61,7 @@ public class Questao3 extends Questao2{
         aux.conflitos = candidato[p2].conflitos;
         aux.posicao = p1;
         aux.lista_de_conflitos = new TreeSet<Ponto>(candidato[p2].lista_de_conflitos);
+        aux.lista_de_conflitos_nao_ordenado= new LinkedList<Ponto>(candidato[p2].lista_de_conflitos_nao_ordenado);
         
         candidato[p2] = candidato[p1];
         candidato[p2].posicao = p2;
@@ -72,6 +73,7 @@ public class Questao3 extends Questao2{
     
     public int  localiza_cruzamentos(int P ,int N, Ponto[] candidato){
         candidato[P].lista_de_conflitos.clear();
+        candidato[P].lista_de_conflitos_nao_ordenado.clear();
         int count = 0;
         int vizinhoO;
         int vizinhoA;
@@ -94,6 +96,7 @@ public class Questao3 extends Questao2{
             if(SegmentsInt(candidato[P],candidato[vizinhoO],candidato[analise],candidato[vizinhoA])){
                 count++;
                 candidato[P].lista_de_conflitos.add(candidato[analise]);
+                candidato[P].lista_de_conflitos_nao_ordenado.add(candidato[analise]);
             }
             analise++;
             if(analise >= N) analise = 0;
@@ -141,10 +144,11 @@ public class Questao3 extends Questao2{
     public Ponto[] proximo(Ponto[] atual, char flag){
         Ponto[] atualCopia = new Ponto[atual.length];
         System.arraycopy(atual, 0, atualCopia, 0, atual.length);
-        int menor = 1000000;
-        int menorPonto = -1;
+        int menor = 1000000; // qtt d conflitos do menor ponto
+        int menorPonto = -1; // posicao do ponto
         int N = atualCopia.length;
         int n = 0; //local da origem
+        LinkedList<Integer> pontosComConflitos = new LinkedList<Integer>();
         for(int i = 0 ; i < N ; i++){
             int count = localiza_cruzamentos(n,N, atualCopia);
             if(flag == 'b' && count > 0){
@@ -156,17 +160,27 @@ public class Questao3 extends Questao2{
                 menor = count;
                 menorPonto = n;
             }
+            if(count > 0){
+                pontosComConflitos.add(n);
+            }
             n++;
         }
-        
+        int posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao;
         if(menorPonto == -1){
             System.out.println("igual");
             return atualCopia;
         }
-        //System.out.println(menorPonto+1 + " " + atualCopia[menorPonto].lista_de_conflitos.first().posicao);
+        if(flag == 'd'){
+            menorPonto = rand(pontosComConflitos.size()-1,0);
+            System.out.println(menorPonto);
+            System.out.println(atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.size());
+            int conflitoAleatorio = rand(atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.size()-1,0);
+            posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.get(conflitoAleatorio).posicao;
+        }
+
         if(menorPonto == N-1){
-            exchange(0, atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao, atualCopia);
-        }else exchange(menorPonto+1, atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao, atualCopia);
+            exchange(0, posicaoDoConflito, atualCopia);
+        }else exchange(menorPonto+1, posicaoDoConflito, atualCopia);
         return atualCopia;
         
     }
