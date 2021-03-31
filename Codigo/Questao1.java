@@ -1,8 +1,11 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.util.LinkedList;
+import java.util.Arrays;
+
 public class Questao1 {
     Random r = new Random();
+    Arquivo arquivo = new Arquivo();
     /**
      * Gera valores aleatorios entre o intervalo minimo e maximo
      * @param max Valor superior do intervalo
@@ -26,8 +29,10 @@ public class Questao1 {
             Ponto novo = new Ponto(x,y);
             if(array.contains(novo)) i--;
             else array.add(novo);
-            System.out.printf("(%d,%d)\n",x,y); //VERIFICAR SE O PONTO JA FOI CRIADO ANTES
         }
+        Ponto[] arrayP = array.toArray(new Ponto[array.size()]);
+        System.out.println(Arrays.toString(arrayP));
+        arquivo.escreveCoordenada(arrayP);
         return array;
     }
 }

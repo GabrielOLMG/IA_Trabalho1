@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 public class Questao2 extends Questao1{
     LinkedList<Ponto> candidato = new LinkedList<Ponto>();
-    Arquivo arquivo = new Arquivo();
     Ponto[] candidatoArray;
 
     
