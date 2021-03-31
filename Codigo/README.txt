@@ -7,16 +7,15 @@ Intruções Gerais:
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Explicando Cada Arquivo txt:
-    ->dominio_input.txt
-        <>Recebe 1 na primeira linha. Serve apenas para fazer com que o código funcione de forma que dê para usar o case, provavelmente iremos mudar.
-        <>Recebe o valor N na quarta linha.
-        <>Recebe o valor M na terceira linha.
-
     ->pontos_input.txt
-        <>Recebe o número da questão na primeira linha. (Só serve para as questões 2,3 e 4).
-        <>Recebe a letra da questão na segunda linha.  (Se a questão não tiver letra, então esta linha pode ser apagada).
-        <>Recebe N quantidades de pontos na terceira linha.
-        <>Recebe N pontos nas N linhas seguintes no formato: X Y
+        <>Recebe um inteiro 0 ou 1, que ira definir se sera ATIVADO PONTOS ALEATORIOS OU NÃO
+        <>Recebe o número da questão na segunda linha. (Só serve para as questões 2,3 e 4).
+        <>Recebe a letra da questão na terceira linha.  (Se a questão não tiver letra, então esta linha pode ser apagada).
+        <>Recebe N quantidades de pontos na quarta linha.
+        <>Caso 1(Modo aleatorio ATIVADO)
+            <>Recebe um inteiro M na quinta linha, que ira definir o dominio dos pontos aleatorios
+        <>Caso 0(Modo aleatorio DESATIVADO)
+            <>Recebe N pontos nas N linhas seguintes no formato: X Y
 
     ->py_input.txt
         <>Recebe o número de pontos na primeira linha. (Obs: neste arquivo é acrescentado o ponto inicial novamente no final do arquivo para que seja criado a ligação entre o início e o fim, por isso tem N+1 pontos).
@@ -26,7 +25,8 @@ Explicando Cada Arquivo txt:
 Compilação:
     ->Questão 1: javac Main.java && java Main < dominio_input.txt 
     ->Questão 2: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
-    ->Questão 3: javac Main.java && java Main < pontos_input.txt
+    ->Questão 3: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
     ->Questão 4: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
+    ->Questão 5: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
     
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

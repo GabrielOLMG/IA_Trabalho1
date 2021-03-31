@@ -1,7 +1,24 @@
-5
-d
+1
+3
+20
 50
-50
+
+
+
+
+
+-------------------------
+1 se for aleatorio 0 se nao for aleatorio
+Numero da questão
+Caso 0
+letra (caso o numero da questão seja 2 ou 4). Não colcoar esta linha caso a questão não tenha opções
+Quantidade de Pontos(N)
+pontos no formato X Y
+
+Caso 1
+Quantidade de Pontos(N)
+Intervalo Para Pontos(M). Quadrado [-M,M][-M,M]
+
 
 14
 0 0
@@ -19,22 +36,12 @@ d
 6 -2
 6 3
 
-
-
-
--------------------------
-Numero da questão
-letra (caso o numero da questão seja 2 ou 4)
-numero de Pontos
-pontos
-
-9
--2 3
--1 1
+8
+0 2
 1 4
-2 1
-2 4
-5 2
-6 4
-8 2
-9 4
+3 5
+4 3
+5 0
+7 5
+8 7
+10 8

@@ -7,7 +7,12 @@ class Main {
         Questao4 q_4 = new Questao4();
         Questao5 q_5 = new Questao5();
         Scanner in = new Scanner(System.in);
+        int alt = in.nextInt(); //vai  ler se vai ser aleatorio ou n
+        boolean aleatorio;
+        if(alt == 1) aleatorio = true;
+        else aleatorio = false;
         int N_questao = in.nextInt(); //numero da questão 
+
         String letra;
         switch(N_questao){
             case 1:
@@ -15,18 +20,18 @@ class Main {
                 break;
             case 2:
                 letra = in.next();
-                q_2.q2(in,letra.charAt(0));
+                q_2.q2(in,letra.charAt(0),aleatorio);
                 break;
             case 3:
-                q_3.q3(in);
+                q_3.q3(in, aleatorio);
                 break;
             case 4:
                 letra = in.next();
-                q_4.q4(in,letra.charAt(0));
+                q_4.q4(in,letra.charAt(0), aleatorio);
                 break;
             case 5:
                 letra = in.next();
-                q_5.q5(in,'d');
+                q_5.q5(in,'d', aleatorio);
                 break;
         }
     }   

@@ -1,8 +1,0 @@
-1
-10
-100
-
-
--------------
-N -> Quantidade de pontos
-M -> margem do quadrado [-M,M][-M,M]

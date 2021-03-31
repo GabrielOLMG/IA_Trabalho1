@@ -236,9 +236,14 @@ public class Questao3 extends Questao2{
           return false;
     }
 
-    public void q3(Scanner in) {
-        int N = in.nextInt();       
-        LinkedList<Ponto> a = le_pontos(in,N);
+    public void q3(Scanner in, boolean aleatorio) {
+        LinkedList<Ponto> a;
+        if(!aleatorio){
+            int N = in.nextInt();       
+            a = le_pontos(in,N);
+        }else{
+            a = q1(in);
+        }
         NearestNeighbourFirst(a); //Caminho formado
         candidatoArray = candidato.toArray(new Ponto[candidato.size()]);
         System.out.println("Antes: " + Arrays.toString(candidatoArray));

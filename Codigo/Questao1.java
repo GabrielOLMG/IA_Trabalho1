@@ -26,7 +26,7 @@ public class Questao1 {
             Ponto novo = new Ponto(x,y);
             if(array.contains(novo)) i--;
             else array.add(novo);
-            //System.out.printf("(%d,%d)\n",x,y); //VERIFICAR SE O PONTO JA FOI CRIADO ANTES
+            System.out.printf("(%d,%d)\n",x,y); //VERIFICAR SE O PONTO JA FOI CRIADO ANTES
         }
         return array;
     }

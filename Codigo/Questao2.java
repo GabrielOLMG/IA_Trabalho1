@@ -12,10 +12,15 @@ public class Questao2 extends Questao1{
      * b: Aplicar a heuristica "nearest-neighbour first"
      * @param flag 'a' se for a letra A e 'b' para a letra b
      */
-    public void q2(Scanner in,char flag){
-        int N = in.nextInt();       
-        LinkedList<Ponto> a = le_pontos(in,N);
+    public void q2(Scanner in,char flag, boolean aleatorio){
+        LinkedList<Ponto> a;
         LinkedList<Ponto> permutacao;
+        if(!aleatorio){
+            int N = in.nextInt();       
+            a = le_pontos(in,N);
+        }else{
+            a = q1(in);
+        }
         
         if(flag == 'a'){
             permutacao = criaPermutacoes(new LinkedList<Ponto>(),a);
