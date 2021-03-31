@@ -23,7 +23,7 @@ Explicando Cada Arquivo txt:
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Compilação:
-    ->Questão 1: javac Main.java && java Main < dominio_input.txt 
+    ->Questão 1: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
     ->Questão 2: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
     ->Questão 3: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
     ->Questão 4: javac Main.java && java Main < pontos_input.txt  && py plot.py < py_input.txt
