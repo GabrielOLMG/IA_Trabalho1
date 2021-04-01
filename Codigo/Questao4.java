@@ -9,6 +9,7 @@ public class Questao4 extends Questao3{
      * @param f flag para a questão. a,b,c,d.
      */
     public void hill_Climbing(char f, Ponto[] candidato ){ 
+
         Ponto[] atual = new Ponto[candidato.length];
         System.arraycopy(candidato, 0, atual, 0, candidato.length);
         int tentativas = 0;
@@ -16,7 +17,22 @@ public class Questao4 extends Questao3{
             Ponto[] Vizinho = proximo(atual,f);
             System.out.println("Atual: " + Arrays.toString(atual) + " Vizinho: " + Arrays.toString(Vizinho));
             System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
-            if(Qconflitos(Vizinho) >= Qconflitos(atual)){
+            System.out.println(Perimetro(atual) + " " + Perimetro(Vizinho));
+            if(f != 'a' && f != 'b' && Qconflitos(Vizinho) >= Qconflitos(atual)){
+                if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
+                    arquivo.escreveCoordenada(Vizinho);
+                    System.out.println("Fim");
+                    return;
+                }else{ // parte do reset
+                    System.out.println("-----------------------------------");
+                    List<Ponto> list = Arrays.asList(atual);
+                    LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
+                    linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
+                    atual = linkedList.toArray(new Ponto[linkedList.size()]);
+                    System.out.println("Reset");
+                }
+            }else if(Perimetro(Vizinho) >= Perimetro(atual)){
+                
                 if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
@@ -32,7 +48,17 @@ public class Questao4 extends Questao3{
             }else{
                 System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
             }
+            
         }
+    }
+
+    public int Perimetro(Ponto[]Array){
+        int perimetro = 0;
+        for(int i = 0 ; i < Array.length - 1; i++){
+            perimetro +=  distancia(Array[i].X, Array[i].Y, Array[i+1].X, Array[i+1].Y);
+        }
+        perimetro +=  distancia(Array[Array.length-1].X, Array[Array.length-1].Y, Array[0].X, Array[0].Y);
+        return perimetro;
     }
 
     public int Qconflitos(Ponto[] atual){//so retorna quantidade d conflitos
