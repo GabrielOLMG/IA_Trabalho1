@@ -1,41 +1,20 @@
-import java.util.TreeSet;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Scanner; 
+import java.util.*;
 public class Questao3 extends Questao2{
-    
-    /**
-     * Produto interno entre os pontos
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @return
-     */
-    static public int prod_int(int x1,int y1, int x2, int y2){
-        return (x1*y2 - x2*y1);
-    }
-    
-    /**
-     * Função retirada do slide compartilhado pela professora para verificar se  2 retas se cruzam
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param p4
-     * @return
-     */
-    public boolean SegmentsInt(Ponto p1,Ponto p2,Ponto p3,Ponto p4){
-        int d123 = prod_int((p3.X-p1.X),(p3.Y-p1.Y), (p2.X-p1.X), (p2.Y-p1.Y));
-        int d124 = prod_int((p4.X-p1.X),(p4.Y-p1.Y), (p2.X-p1.X), (p2.Y-p1.Y));
-        int d341 = prod_int((p1.X-p3.X),(p1.Y-p3.Y), (p4.X-p3.X), (p4.Y-p3.Y));
-        int d342 = prod_int((p2.X-p3.X),(p2.Y-p3.Y), (p4.X-p3.X), (p4.Y-p3.Y));
-        
-        if((d123 * d124 < 0) && (d341 * d342 < 0)) return true;
-        else if( (d123 == 0) && InBox(p1,p2,p3)) return true;
-        else if( (d124 == 0) && InBox(p1,p2,p4)) return true;
-        else if( (d341 == 0) && InBox(p3,p4,p1)) return true;
-        else if( (d342 == 0) && InBox(p3,p4,p2)) return true;
-        else return false;
+
+
+    public int SegmentsInt(Ponto p1, Ponto p2,Ponto p3, Ponto p4){
+        int d12_3=((p3.X-p1.X)*(p2.Y-p1.Y))-((p2.X-p1.X)*(p3.Y-p1.Y));
+        int d12_4=((p4.X-p1.X)*(p2.Y-p1.Y))-((p2.X-p1.X)*(p4.Y-p1.Y));
+        int d34_1=((p1.X-p3.X)*(p4.Y-p3.Y))-((p4.X-p3.X)*(p1.Y-p3.Y));
+        int d34_2=((p2.X-p3.X)*(p4.Y-p3.Y))-((p4.X-p3.X)*(p2.Y-p3.Y));
+        int d12_34=((p2.X-p1.X)*(p4.Y-p3.Y))-((p2.Y-p1.Y)*(p4.X-p3.X));
+        int prod_int=((p2.X-p1.X)*(p4.X-p3.X))+((p2.Y-p1.Y)*(p4.Y-p3.Y));
+        if(d12_3*d12_4 < 0 && d34_1*d34_2 <0){return 0;}
+        else if(d12_3==0 && InBox(p1,p2,p3)){if(d12_34==0){if(prod_int>0){return 2;} return 1;}return 0;}
+        else if(d12_4==0 && InBox(p1,p2,p4)){if(d12_34==0){if(prod_int>0){return 2;} return 1;}return 0;}
+        else if(d34_1==0 && InBox(p3,p4,p1)){if(d12_34==0){if(prod_int>0){return 2;} return 1;}return 0;}
+        else if(d34_2==0 && InBox(p3,p4,p2)){if(d12_34==0){if(prod_int>0){return 2;} return 1;}return 0;}
+        return -1;
     }
     
     /**
@@ -57,23 +36,76 @@ public class Questao3 extends Questao2{
      * @param candidato array contendo os pontos na ordem
      */
     public void exchange(int p1, int p2, Ponto[] candidato){
-        Ponto aux = new Ponto(candidato[p2].X,candidato[p2].Y);
-        aux.conflitos = candidato[p2].conflitos;
-        aux.posicao = p1;
-        aux.lista_de_conflitos = new TreeSet<Ponto>(candidato[p2].lista_de_conflitos);
-        aux.lista_de_conflitos_nao_ordenado= new LinkedList<Ponto>(candidato[p2].lista_de_conflitos_nao_ordenado);
-        
-        candidato[p2] = candidato[p1];
-        candidato[p2].posicao = p2;
+        int P1_anterior = p1-1;
+        System.out.println("->>>>>>>>>" + candidato[P1_anterior].tipo_de_conflito.get(candidato[p2]));
+        if(p1 == 0) P1_anterior = candidato.length-1;
+        if(candidato[P1_anterior].tipo_de_conflito.get(candidato[p2]) == 0){
+            Ponto aux = new Ponto(candidato[p2].X,candidato[p2].Y);
+            aux.conflitos = candidato[p2].conflitos;
+            aux.posicao = p1;
+            aux.lista_de_conflitos = new TreeSet<Ponto>(candidato[p2].lista_de_conflitos);
+            aux.lista_de_conflitos_nao_ordenado= new LinkedList<Ponto>(candidato[p2].lista_de_conflitos_nao_ordenado);
+            
+            candidato[p2] = candidato[p1];
+            candidato[p2].posicao = p2;
 
-        candidato[p1] = aux;
-        
+            candidato[p1] = aux;
+        }else{
+            int i = P1_anterior;
+            int j = p2;
+            Ponto[] paux = new Ponto[candidato.length];
+            LinkedList<Ponto> p = new LinkedList<Ponto>();
+            for(int k = 0 ; k < candidato.length ; k++) p.add(candidato[k]);
+            int y = 0;
+            if(candidato[i].tipo_de_conflito.get(candidato[i]) == 1){
+                paux[0] = p.get(i);
+                if(j != candidato.length-1){
+                    paux[1]=p.get(j+1);
+                    paux[2]=p.get(j);
+                    paux[3]=p.get(i+1);
+                    y=3;
+                    p.remove(j+1);
+                    p.remove(j);
+                    p.remove(i+1);
+                    p.remove(i);
+                }else{
+                    paux[1]=p.get(j);
+                    paux[2]=p.get(i+1);
+                    y=2;
+                    p.remove(j);
+                    p.remove(i+1);
+                    p.remove(i);
+                } 
+            }else{
+                paux[0]=p.get(i);
+                paux[1]=p.get(j);
+                paux[2]=p.get(j+1);
+                paux[3]=p.get(i+1);
+                y=3;
+                p.remove(j+1);
+                p.remove(j);
+                p.remove(i+1);
+                p.remove(i);
+            }
+            int w=i;
+            while(w!=p.size()){
+                paux[y+1]=p.remove(i);
+                y++;
+            }
+            while(p.size()!=0){
+                paux[y]=p.poll();
+            }
+            System.arraycopy(paux, 0, candidato, 0, candidato.length);
+        }
     }
+
+
 
     
     public int  localiza_cruzamentos(int P ,int N, Ponto[] candidato){
         candidato[P].lista_de_conflitos.clear();
         candidato[P].lista_de_conflitos_nao_ordenado.clear();
+        candidato[P].tipo_de_conflito.clear();
         int count = 0;
         int vizinhoO;
         int vizinhoA;
@@ -91,10 +123,15 @@ public class Questao3 extends Questao2{
         }
 
         for(int i = 0 ; i < N-3 ; i++){
+            
             if(analise == N-1) vizinhoA = 0;
             else vizinhoA = analise+1;
-            if(SegmentsInt(candidato[P],candidato[vizinhoO],candidato[analise],candidato[vizinhoA])){
+            
+            int cross = SegmentsInt(candidato[P],candidato[vizinhoO],candidato[analise],candidato[vizinhoA]);
+            
+            if(cross != -1){
                 count++;
+                candidato[P].tipo_de_conflito.put(candidato[analise],cross);
                 candidato[P].lista_de_conflitos.add(candidato[analise]);
                 candidato[P].lista_de_conflitos_nao_ordenado.add(candidato[analise]);
             }
@@ -125,7 +162,9 @@ public class Questao3 extends Questao2{
         for(int i = 0 ; i < N-3 ; i++){
             if(analise == N-1) vizinhoA = 0;
             else vizinhoA = analise+1;
-            if(SegmentsInt(candidato[P],candidato[vizinhoO],candidato[analise],candidato[vizinhoA])){
+
+            int cross = SegmentsInt(candidato[P],candidato[vizinhoO],candidato[analise],candidato[vizinhoA]);
+            if(cross != -1){
                 count++;
             }
             analise++;
