@@ -1,52 +1,54 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 public class Questao5 extends Questao4{
 
-
     public void simulated_annealing(char f, Ponto[] candidato ){ 
-        Ponto[] atual = new Ponto[candidato.length];
-        System.arraycopy(candidato, 0, atual, 0, candidato.length);
-        double alfa = 0.99; // o quanto a temperatura vai ser diminuida por turno
-        double T = 100; // temperatura inicial
-        int i = 0;
+        Ponto[] atual = new Ponto[candidato.length]; 
+        System.arraycopy(candidato, 0, atual, 0, candidato.length); 
+        double alfa = 0.99;
+        double T = 100; 
+        int i = 0; 
+        System.out.println("Original: " + Arrays.toString(atual));
         while(true){
             i++;
-            if(T == 0){
+            if(T == 0){ 
                 System.out.println("TEMP = 0");
                 return;
             }
-            Ponto[] Vizinho = proximo(atual,f);
-            System.out.println("Atual: " + Arrays.toString(atual) + " Vizinho: " + Arrays.toString(Vizinho));
-            System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) + "-----> " + T );
-            if(Qconflitos(atual)==0){ //faz com q ele pare quando chega a um max d interações
-                arquivo.escreveCoordenada(Vizinho);
-                System.out.println("Fim " + i);
+            Ponto[] Vizinho = proximo(atual,f); 
+            if(Qconflitos(atual)==0){ 
+                arquivo.escreveCoordenada(Vizinho); 
+                System.out.println("Estado Final: " + Arrays.toString(atual));
                 return;
             }
-            int varEnrg = Qconflitos(Vizinho) - Qconflitos(atual);
-            if(varEnrg < 0)  System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
+            int varEnrg = Qconflitos(Vizinho) - Qconflitos(atual); 
+            if(varEnrg < 0)  System.arraycopy(Vizinho, 0, atual, 0, candidato.length); 
             else{
-                double p = Math.random(); //OBS:SEMPRE Q VAR=0 ELE ESTA ACEITANDO O VALOR VIZINHO, JA Q E^(-DELTA/T) = 1.
-                if(p < Math.exp(-varEnrg/T)){ //vizinho teve mais conflitos, então vamos verificar se devemos considerar pegar ele ou n, usando probabilidade e^(-VariancaDoConflito/T)
-                    System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
-                    System.out.println("So desta vez ein " + Math.exp(-varEnrg/T));
+                double p = Math.random(); 
+                if(p < Math.exp(-varEnrg/T)){ 
+                    System.arraycopy(Vizinho, 0, atual, 0, candidato.length); 
                 }
             }
-            if(i%20 == 0) T=T*alfa;
+            if(i%20 == 0) T=T*alfa; 
+            if(i > 5000){
+                System.out.println("----Fim das Tentativas----");
+                System.out.println("Estado Final: " + Arrays.toString(atual)); 
+                arquivo.escreveCoordenada(Vizinho);
+                return;
+            }
         }
     }
+
 
     public void q5(Scanner in,char f, boolean aleatorio){
         LinkedList<Ponto> a;
         if(!aleatorio){
-            int N = in.nextInt();       
-            a = le_pontos(in,N);
+            int N = in.nextInt();      
+            a = le_pontos(in,N); 
         }else{
-            a = q1(in);
+            a = q1(in); 
         }
-        NearestNeighbourFirst(a); //Caminho formado
+        NearestNeighbourFirst(a); 
         candidatoArray = candidato.toArray(new Ponto[candidato.size()]);
-        simulated_annealing(f,candidatoArray);
+        simulated_annealing(f,candidatoArray); 
     }
 }

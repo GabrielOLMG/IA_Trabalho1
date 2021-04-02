@@ -1,54 +1,46 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.List;
+import java.util.*;
 public class Questao4 extends Questao3{
-    /**
-     * Aplica o alg hill_Climbing
-     * @param candidato Configuração original
-     * @param f flag para a questão. a,b,c,d.
-     */
-    public void hill_Climbing(char f, Ponto[] candidato ){ 
 
-        Ponto[] atual = new Ponto[candidato.length];
-        System.arraycopy(candidato, 0, atual, 0, candidato.length);
-        int tentativas = 0;
+    public void hill_Climbing(char f, Ponto[] candidato ){ 
+        Ponto[] atual = new Ponto[candidato.length]; 
+        System.arraycopy(candidato, 0, atual, 0, candidato.length); 
+        int tentativas = 0; 
+        System.out.println("Orignal: " + Arrays.toString(atual)); 
         while(true){
-            Ponto[] Vizinho = proximo(atual,f);
-            System.out.println("Atual: " + Arrays.toString(atual) + " Vizinho: " + Arrays.toString(Vizinho));
-            System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
-            System.out.println(Perimetro(atual) + " " + Perimetro(Vizinho));
-            if(f != 'a' && f != 'b' && Qconflitos(Vizinho) >= Qconflitos(atual)){
-                if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
+            Ponto[] Vizinho = proximo(atual,f); 
+            if(f != 'a' && f != 'b' && Qconflitos(Vizinho) >= Qconflitos(atual)){ 
+                if(Qconflitos(atual) == 0){
+                    System.out.println("Estado Final: " + Arrays.toString(atual)); 
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
-                }else{ // parte do reset
-                    System.out.println("-----------------------------------");
+                }else{
                     List<Ponto> list = Arrays.asList(atual);
                     LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
                     linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
                     atual = linkedList.toArray(new Ponto[linkedList.size()]);
-                    System.out.println("Reset");
                 }
-            }else if(Perimetro(Vizinho) >= Perimetro(atual)){
+            }else if(Perimetro(Vizinho) >= Perimetro(atual)){ 
                 
-                if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
+                if(Qconflitos(atual) == 0){ 
+                    System.out.println("Estado Final: " + Arrays.toString(atual)); 
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
-                }else{ // parte do reset
-                    System.out.println("-----------------------------------");
+                }else{ 
                     List<Ponto> list = Arrays.asList(atual);
                     LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
                     linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
                     atual = linkedList.toArray(new Ponto[linkedList.size()]);
-                    System.out.println("Reset");
                 }
-            }else{
-                System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
+            }else System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
+            if(tentativas > 5000){ 
+                System.out.println("----Fim das Tentativas----");
+                System.out.println("Estado Final: " + Arrays.toString(atual)); 
+                arquivo.escreveCoordenada(Vizinho);
+                return;
             }
-            
+            tentativas++;
         }
     }
 
@@ -57,13 +49,13 @@ public class Questao4 extends Questao3{
         for(int i = 0 ; i < Array.length - 1; i++){
             perimetro +=  distancia(Array[i].X, Array[i].Y, Array[i+1].X, Array[i+1].Y);
         }
-        perimetro +=  distancia(Array[Array.length-1].X, Array[Array.length-1].Y, Array[0].X, Array[0].Y);
+        perimetro +=  distancia(Array[Array.length-1].X, Array[Array.length-1].Y, Array[0].X, Array[0].Y); 
         return perimetro;
     }
 
-    public int Qconflitos(Ponto[] atual){//so retorna quantidade d conflitos
-        int N = atual.length;
-        int n = 0; //local da origem
+    public int Qconflitos(Ponto[] atual){
+        int N = atual.length; 
+        int n = 0; 
         int count = 0;
         for(int i = 0 ; i < N ; i++){
             count += quantidade_cruzamentos(n,N, atual);
@@ -72,18 +64,17 @@ public class Questao4 extends Questao3{
         return count;
     }
 
-
     public void q4(Scanner in,char f,boolean aleatorio){
         LinkedList<Ponto> a;
         if(!aleatorio){
-            int N = in.nextInt();       
-            a = le_pontos(in,N);
+            int N = in.nextInt();        
+            a = le_pontos(in,N); 
         }else{
-            a = q1(in);
+            a = q1(in); 
         }
-        NearestNeighbourFirst(a); //Caminho formado
+        NearestNeighbourFirst(a); 
         candidatoArray = candidato.toArray(new Ponto[candidato.size()]);
-        hill_Climbing(f,candidatoArray);
+        hill_Climbing(f,candidatoArray); 
     }
 
 }

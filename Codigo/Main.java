@@ -1,18 +1,20 @@
-import java.util.Scanner;
+import java.util.*;
 class Main {
     public static void main(String[] args){
+        long start;
+        long end;
+        start = System.currentTimeMillis();
         Questao1 q_1 = new Questao1();
         Questao2 q_2 = new Questao2();
         Questao3 q_3 = new Questao3();
         Questao4 q_4 = new Questao4();
         Questao5 q_5 = new Questao5();
         Scanner in = new Scanner(System.in);
-        int alt = in.nextInt(); //vai  ler se vai ser aleatorio ou n
+        int alt = in.nextInt();
         boolean aleatorio;
         if(alt == 1) aleatorio = true;
         else aleatorio = false;
-        int N_questao = in.nextInt(); //numero da questão 
-
+        int N_questao = in.nextInt();
         String letra;
         switch(N_questao){
             case 1:
@@ -30,12 +32,11 @@ class Main {
                 q_4.q4(in,letra.charAt(0), aleatorio);
                 break;
             case 5:
-                letra = in.next();
-                q_5.q5(in,'d', aleatorio);
+                letra = "d";
+                q_5.q5(in,letra.charAt(0), aleatorio);
                 break;
         }
+        end = System.currentTimeMillis();
+        System.out.println(end-start); 
     }   
 }
-
-// javac Main.java && java Main < dominio_input.txt 
-// javac Main.java && java Main < pontos_input.txt 
