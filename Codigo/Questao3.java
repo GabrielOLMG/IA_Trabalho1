@@ -224,6 +224,19 @@ public class Questao3 extends Questao2{
         
     }
 
+    public Boolean pontosColineares(Ponto [] pontos){
+        for(int i=0;i<pontos.length;i++){
+            for(int j=0;j<i;j++){
+                for(int k=j+1;k<i;k++){
+                    if(((pontos[j].X)*(pontos[k].Y) + (pontos[k].X)*(pontos[i].X)+(pontos[k].Y)*(pontos[i].Y)-(pontos[k].Y)*(pontos[i].X)-(pontos[j].X)*(pontos[i].Y)-(pontos[k].Y)*(pontos[k].X))==0){
+                        return true; 
+                    }
+                }
+            }
+          }
+        return false;
+    }
+
     public void q3(Scanner in, boolean aleatorio) {
         LinkedList<Ponto> a;
         if(!aleatorio){
