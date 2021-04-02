@@ -19,46 +19,36 @@ public class Questao4 extends Questao3{
             System.out.println(Qconflitos(atual) + " " + Qconflitos(Vizinho) );
             System.out.println(Perimetro(atual) + " " + Perimetro(Vizinho));
             if(f != 'a' && f != 'b' && Qconflitos(Vizinho) >= Qconflitos(atual)){
-                if(Qconflitos(atual) == 0){ //faz com q ele pare quando chega a um max d interações
+                if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
                 }else{ // parte do reset
                     System.out.println("-----------------------------------");
-                    
                     List<Ponto> list = Arrays.asList(atual);
                     LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
                     linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
                     atual = linkedList.toArray(new Ponto[linkedList.size()]);
-                    System.out.println("Atual: " + Arrays.toString(atual));
-                    
                     System.out.println("Reset");
                 }
             }else if(Perimetro(Vizinho) >= Perimetro(atual)){
                 
-                if(Qconflitos(atual) == 0){ //faz com q ele pare quando chega a um max d interações
+                if(Qconflitos(atual) == 0 || tentativas >= 100){ //faz com q ele pare quando chega a um max d interações
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
                 }else{ // parte do reset
                     System.out.println("-----------------------------------");
-                    
                     List<Ponto> list = Arrays.asList(atual);
                     LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
                     linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
                     atual = linkedList.toArray(new Ponto[linkedList.size()]);
-                    System.out.println("Atual: " + Arrays.toString(atual));
                     System.out.println("Reset");
                 }
             }else{
                 System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
             }
-            if(tentativas == 100){
-                System.out.println("Quantidade max d interações");
-                arquivo.escreveCoordenada(Vizinho);
-                return;
-            }
-            tentativas++;
+            
         }
     }
 

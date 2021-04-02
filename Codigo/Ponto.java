@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.TreeSet;
+import java.util.LinkedList;
 public class Ponto implements Comparable<Ponto>{
     int X;
     int Y;
@@ -6,7 +7,6 @@ public class Ponto implements Comparable<Ponto>{
     int posicao;
     TreeSet<Ponto> lista_de_conflitos;
     LinkedList<Ponto> lista_de_conflitos_nao_ordenado;
-    HashMap<Ponto, Integer> tipo_de_conflito;
     Ponto(){
         lista_de_conflitos = new TreeSet<Ponto>();
     }
@@ -15,7 +15,6 @@ public class Ponto implements Comparable<Ponto>{
         this.Y = Y;
         lista_de_conflitos = new TreeSet<Ponto>();
         lista_de_conflitos_nao_ordenado = new LinkedList<Ponto>();
-        tipo_de_conflito = new HashMap<Ponto,Integer>();
     }
 
     public String toString(){
