@@ -32,7 +32,7 @@ class Main {
                 q_4.q4(in,letra.charAt(0), aleatorio);
                 break;
             case 5:
-                letra = "d";
+                letra = "a";
                 q_5.q5(in,letra.charAt(0), aleatorio);
                 break;
         }

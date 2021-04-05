@@ -104,7 +104,7 @@ public class Questao3 extends Questao2{
         int posicaoPontoP = -1; 
         int posicaoPontoP2 = -1; 
         boolean b_achou = false; 
-        int minPerimetro = 1000; 
+        int minPerimetro = 100000000; 
         for (Ponto p : todosConflitos){
             LinkedList<Ponto> conflitosP = p.lista_de_conflitos_nao_ordenado;
             Ponto pxP; 
@@ -115,6 +115,7 @@ public class Questao3 extends Questao2{
                 if(p2.posicao == arrayPontos.length - 1) pxP2 = arrayPontos[0];
                 else pxP2 = arrayPontos[p2.posicao+1];
                 int somaDist = (distancia(p.X, p.Y, p2.X, p2.Y) + distancia(pxP.X, pxP.Y, pxP2.X, pxP2.Y)) - ( distancia(p.X, p.Y, pxP.X, pxP.Y) + distancia(p2.X, p2.Y, pxP2.X, pxP2.Y));
+                
                 if(somaDist < minPerimetro){ 
                     minPerimetro = somaDist;
                     posicaoPontoP = p.posicao;
@@ -135,43 +136,39 @@ public class Questao3 extends Questao2{
     }
 
     public Ponto[] proximo(Ponto[] atual, char flag){
-        Ponto[] atualCopia = new Ponto[atual.length];
-        System.arraycopy(atual, 0, atualCopia, 0, atual.length);
         int menor = 1000000; 
         int menorPonto = -1; 
-        int N = atualCopia.length; 
+        int N = atual.length; 
         int n = 0; 
         LinkedList<Integer> pontosComConflitos = new LinkedList<Integer>(); 
         LinkedList<Ponto> pontosComConflitosObjetos = new LinkedList<Ponto>(); 
         for(int i = 0 ; i < N ; i++){
-            int count = localiza_cruzamentos(n,N, atualCopia); 
+            int count = localiza_cruzamentos(n,N, atual); 
             if(count < menor && count > 0){ 
                 menor = count;
                 menorPonto = n; 
             }
             if(count > 0){ 
                 pontosComConflitos.add(n);
-                pontosComConflitosObjetos.add(atualCopia[n]);
+                pontosComConflitosObjetos.add(atual[n]);
             }
             n++;
         }
         
-        if(menorPonto == -1)return atualCopia; 
-        
-        if(flag == 'a' || flag == 'b') return perimetroConflito(pontosComConflitosObjetos,atualCopia, flag); 
+        if(menorPonto == -1 )return atual; 
+        if(flag == 'a' || flag == 'b') return perimetroConflito(pontosComConflitosObjetos,atual, flag); 
 
-        int posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos.pollFirst().posicao; 
+        int posicaoDoConflito = atual[menorPonto].lista_de_conflitos.pollFirst().posicao; 
         
         if(flag == 'd'){ 
             menorPonto = pontosComConflitos.get(rand(pontosComConflitos.size()-1,0));
-            int conflitoAleatorio = rand(atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.size()-1,0);
-            posicaoDoConflito = atualCopia[menorPonto].lista_de_conflitos_nao_ordenado.get(conflitoAleatorio).posicao;
+            int conflitoAleatorio = rand(atual[menorPonto].lista_de_conflitos_nao_ordenado.size()-1,0);
+            posicaoDoConflito = atual[menorPonto].lista_de_conflitos_nao_ordenado.get(conflitoAleatorio).posicao;
         }
-
         if(menorPonto == N-1){ 
-            exchange(0, posicaoDoConflito, atualCopia);
-        }else exchange(menorPonto+1, posicaoDoConflito, atualCopia);
-        return atualCopia;
+            exchange(0, posicaoDoConflito, atual);
+        }else exchange(menorPonto+1, posicaoDoConflito, atual);
+        return atual;
     }
 
     public void q3(Scanner in, boolean aleatorio) {
@@ -185,7 +182,8 @@ public class Questao3 extends Questao2{
         NearestNeighbourFirst(a); 
         candidatoArray = candidato.toArray(new Ponto[candidato.size()]);
         System.out.println("Antes: " + Arrays.toString(candidatoArray));
-        Ponto[] px = proximo(candidatoArray, 'c'); 
+        Ponto[] px = proximo(candidatoArray, 'a'); 
         System.out.println("Depois: " + Arrays.toString(px));
+        arquivo.escreveCoordenada(px);
     }
 }

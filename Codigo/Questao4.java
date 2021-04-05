@@ -1,16 +1,16 @@
 import java.util.*;
 public class Questao4 extends Questao3{
 
-    public void hill_Climbing(char f, Ponto[] candidato ){ 
-        Ponto[] atual = new Ponto[candidato.length]; 
-        System.arraycopy(candidato, 0, atual, 0, candidato.length); 
+    public void hill_Climbing(char f, Ponto[] atual ){ 
         int tentativas = 0; 
-        System.out.println("Orignal: " + Arrays.toString(atual)); 
+        //System.out.println("Orignal: " + Arrays.toString(atual)); 
         while(true){
             Ponto[] Vizinho = proximo(atual,f); 
-            if(f != 'a' && f != 'b' && Qconflitos(Vizinho) >= Qconflitos(atual)){ 
+            if((f != 'a' && f != 'b' && Qconflitos(Vizinho) >= Qconflitos(atual)) || 
+               ((f == 'a' || f == 'b') && Perimetro(Vizinho) >= Perimetro(atual))){ 
                 if(Qconflitos(atual) == 0){
                     System.out.println("Estado Final: " + Arrays.toString(atual)); 
+                    System.out.println(tentativas);
                     arquivo.escreveCoordenada(Vizinho);
                     System.out.println("Fim");
                     return;
@@ -20,20 +20,7 @@ public class Questao4 extends Questao3{
                     linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
                     atual = linkedList.toArray(new Ponto[linkedList.size()]);
                 }
-            }else if(Perimetro(Vizinho) >= Perimetro(atual)){ 
-                
-                if(Qconflitos(atual) == 0){ 
-                    System.out.println("Estado Final: " + Arrays.toString(atual)); 
-                    arquivo.escreveCoordenada(Vizinho);
-                    System.out.println("Fim");
-                    return;
-                }else{ 
-                    List<Ponto> list = Arrays.asList(atual);
-                    LinkedList<Ponto> linkedList = new LinkedList<Ponto>(list);
-                    linkedList = criaPermutacoes(new LinkedList<Ponto>(), linkedList);
-                    atual = linkedList.toArray(new Ponto[linkedList.size()]);
-                }
-            }else System.arraycopy(Vizinho, 0, atual, 0, candidato.length);
+            }else System.arraycopy(Vizinho, 0, atual, 0, atual.length);
             if(tentativas > 5000){ 
                 System.out.println("----Fim das Tentativas----");
                 System.out.println("Estado Final: " + Arrays.toString(atual)); 
@@ -72,9 +59,10 @@ public class Questao4 extends Questao3{
         }else{
             a = q1(in); 
         }
-        NearestNeighbourFirst(a); 
+        NearestNeighbourFirst(a);
         candidatoArray = candidato.toArray(new Ponto[candidato.size()]);
         hill_Climbing(f,candidatoArray); 
+        
     }
 
 }

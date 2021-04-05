@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Questao1 {
-    Random r = new Random(2019); 
+    Random r = new Random(140297167); 
     Arquivo arquivo = new Arquivo(); 
 
     public int rand(int max, int min){ 

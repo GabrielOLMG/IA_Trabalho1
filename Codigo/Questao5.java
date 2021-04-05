@@ -30,7 +30,7 @@ public class Questao5 extends Questao4{
             }
             if(i%20 == 0) T=T*alfa; 
             if(i > 5000){
-                System.out.println("----Fim das Tentativas----");
+                System.out.println("----Fim das Tentativas---- " + i);
                 System.out.println("Estado Final: " + Arrays.toString(atual)); 
                 arquivo.escreveCoordenada(Vizinho);
                 return;
